@@ -1,27 +1,21 @@
 <template>
   <v-app>
-    <q-header />
-    <v-main>
-      <v-container>
-        <router-view />
-      </v-container>
-    </v-main>
-    <q-footer />
+    <component :is="layoutChange"></component>
   </v-app>
 </template>
 
 <script>
-import qHeader from '@/components/qHeader'
-import qFooter from '@/components/qFooter'
+import defaultLayout from '@/layout/default'
+import emptyLayout from '@/layout/empty'
 export default {
   name: 'App',
-  components: {
-    qHeader,
-    qFooter,
+  components: { defaultLayout, emptyLayout },
+  computed: {
+    layoutChange() {
+      return (this.$route.meta.layout || 'empty') + '-layout'
+    },
   },
 }
 </script>
 
-<style lang="scss">
-/* @import '~reset-css/sass/_reset.scss'; */
-</style>
+<style lang="scss"></style>

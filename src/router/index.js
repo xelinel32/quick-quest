@@ -14,6 +14,8 @@ const routes = [
     component: () => import('../views/qQuestions.vue'),
     meta: {
       title: 'Questions',
+      layout: 'default',
+      auth: true,
     },
   },
   {
@@ -22,6 +24,8 @@ const routes = [
     component: () => import('../views/qContact.vue'),
     meta: {
       title: 'Contact',
+      layout: 'default',
+      auth: true,
     },
   },
   {
@@ -30,6 +34,7 @@ const routes = [
     component: () => import('../views/qError.vue'),
     meta: {
       title: '404 | Page not found',
+      layout: 'empty',
     },
   },
   {
@@ -38,6 +43,7 @@ const routes = [
     component: () => import('../views/qLogin.vue'),
     meta: {
       title: 'Login Page',
+      layout: 'empty',
     },
   },
 ]
@@ -52,7 +58,13 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   to.matched.forEach(item => (document.title = item.meta.title))
+  // const requireAuth = to.meta.auth
   next()
+  // if (requireAuth) {
+  //   next('/login?message=login')
+  // } else {
+  //   next()
+  // }
 })
 
 export default router

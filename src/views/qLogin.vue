@@ -9,9 +9,10 @@
           append-icon="mdi-email"
           outlined
           label="E-mail"
+          :rules="emailRules"
           placeholder="Введите ваш E-mail"
           required
-          v-model="name"
+          v-model="email"
         >
         </v-text-field>
         <v-text-field
@@ -41,11 +42,15 @@ export default {
     return {
       show: false,
       password: '',
-      name: '',
+      email: '',
       rules: {
         required: value => !!value || 'Введите пароль.',
         min: v => v.length >= 6 || 'Минимум 6 символов',
       },
+      emailRules: [
+        v => !!v || 'Введите E-mail',
+        v => /.+@.+\..+/.test(v) || 'Введите коректный E-mail',
+      ],
     }
   },
   methods: {

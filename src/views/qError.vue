@@ -14,7 +14,13 @@
             Page not found
           </v-card-subtitle>
           <v-card-actions class="d-flex justify-center">
-            <v-btn large class="ma-2" outlined color="primary" route to="/"
+            <v-btn
+              large
+              class="ma-2"
+              outlined
+              color="primary"
+              route
+              to="/"
               >Home</v-btn
             >
             <v-btn large class="ma-2" outlined color="warning" route to="/login"
