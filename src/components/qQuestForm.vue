@@ -52,13 +52,18 @@ export default {
   }),
   methods: {
     submitQuestion() {
-      const ourFormData = {
-        name: this.name,
-        select: this.select,
-        quest: this.quest,
-      }
-      if (Object.keys(ourFormData)) {
-        console.log(ourFormData)
+      try {
+        if (this.name && this.quest && this.select) {
+          const ourFormData = {
+            name: this.name,
+            select: this.select,
+            quest: this.quest,
+          }
+          console.log(ourFormData)
+          this.name = this.quest = this.select = ''
+        }
+      } catch (error) {
+        console.log(error)
       }
     },
   },
