@@ -1,43 +1,42 @@
 <template>
-  <div class="q-quest-form">
-    <h1 class="text-center ma-10 display-1">Задайте вопрос</h1>
-    <v-row justify="center">
-      <v-col cols="8">
-        <v-form ref="form" @submit.prevent="submitQuestion">
-          <v-text-field
-            v-model.trim="name"
-            outlined
-            :rules="nameRules"
-            label="Имя"
-            required
-          >
-          </v-text-field>
-          <v-select
-            v-model="select"
-            outlined
-            :items="items"
-            :rules="[v => !!v || 'Item is required']"
-            label="Категория"
-            required
-            clearable
-          >
-          </v-select>
-          <v-textarea
-            outlined
-            label="Введите вопрос"
-            height="100"
-            required
-            :rules="questRules"
-            v-model="quest"
-          ></v-textarea>
-          <v-btn class="success" tile type="submit">
-            <v-icon left small>mdi-send</v-icon>
-            Отправить
-          </v-btn>
-        </v-form>
-      </v-col>
-    </v-row>
-  </div>
+  <v-col cols="6">
+    <v-form ref="form" @submit.prevent="submitQuestion">
+      <v-text-field
+        v-model.trim="name"
+        outlined
+        :rules="nameRules"
+        placeholder="Введите ваше имя"
+        label="Имя"
+        required
+      >
+      </v-text-field>
+      <v-select
+        v-model="select"
+        outlined
+        :items="items"
+        :rules="[v => !!v || 'Категория не выбрана']"
+        label="Категория"
+        placeholder="Выберите категорию вопроса"
+        required
+        clearable
+      >
+      </v-select>
+      <v-textarea
+        outlined
+        label="Введите вопрос"
+        height="100"
+        required
+        :rules="questRules"
+        v-model="quest"
+        placeholder="Напишите ваш вопрос ❤"
+        no-resize
+      ></v-textarea>
+      <v-btn class="success" tile type="submit">
+        <v-icon left small>mdi-send</v-icon>
+        Отправить
+      </v-btn>
+    </v-form>
+  </v-col>
 </template>
 
 <script>

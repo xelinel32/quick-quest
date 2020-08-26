@@ -1,5 +1,11 @@
 <template>
-  <div class="v-contact">contact</div>
+  <div class="v-contact">
+    <q-section-title>
+      <template #center>
+        Контакты
+      </template>
+    </q-section-title>
+  </div>
 </template>
 
 <script>
