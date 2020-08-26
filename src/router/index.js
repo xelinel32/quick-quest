@@ -5,6 +5,10 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '*',
+    redirect: '/error',
+  },
+  {
     name: 'questions',
     path: '/',
     component: () => import('../views/qQuestions.vue'),
@@ -18,6 +22,22 @@ const routes = [
     component: () => import('../views/qContact.vue'),
     meta: {
       title: 'Contact',
+    },
+  },
+  {
+    name: 'error',
+    path: '/error',
+    component: () => import('../views/qError.vue'),
+    meta: {
+      title: '404 | Page not found',
+    },
+  },
+  {
+    name: 'login',
+    path: '/login',
+    component: () => import('../views/qLogin.vue'),
+    meta: {
+      title: 'Login Page',
     },
   },
 ]
