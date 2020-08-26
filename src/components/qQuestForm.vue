@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="6">
+  <v-col cols="12" sm="6">
     <v-form ref="form" @submit.prevent="submitQuestion">
       <v-text-field
         v-model.trim="name"

@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="6">
+  <v-col cols="12" sm="6">
     <v-simple-table dense>
       <template v-slot:default>
         <thead>

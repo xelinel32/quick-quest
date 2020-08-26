@@ -1,8 +1,16 @@
 <template>
   <div class="q-header">
-    <v-navigation-drawer app v-model="drawer" dark absolute temporary right>
+    <v-navigation-drawer
+      app
+      v-model="drawer"
+      dark
+      fixed
+      temporary
+      right
+      :height="'100%'"
+    >
       <v-list nav>
-        <v-list-item-group active-class="teal--text text--accent-4">
+        <v-list-item-group active-class="green--text text--accent-4">
           <v-list-item
             v-for="(link, i) of menuLinks"
             :key="i"
@@ -11,10 +19,20 @@
           >
             <v-list-item-title>{{ link.name }}</v-list-item-title>
           </v-list-item>
+          <v-list-item
+            route
+            to="/login"
+            active-class="green accent-4 white--text"
+          >
+            <v-list-item-title>Sign In </v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
+      <template #append>
+        <v-btn block tile @click="openLink" color="secondary">Logout</v-btn>
+      </template>
     </v-navigation-drawer>
-    <v-app-bar app dark dense class="green accent-3">
+    <v-app-bar app dark hide-on-scroll class="green accent-3">
       <v-toolbar-title class="black--text font-weight-bold">
         QQ
       </v-toolbar-title>
