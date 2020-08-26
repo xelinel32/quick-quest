@@ -5,7 +5,9 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import qSectionTitle from '@/components/qSectionTitle'
+import VuePageTransition from 'vue-page-transition'
 
+Vue.use(VuePageTransition)
 Vue.component('qSectionTitle', qSectionTitle)
 
 Vue.config.productionTip = false
