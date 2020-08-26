@@ -4,6 +4,9 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import qSectionTitle from '@/components/qSectionTitle'
+
+Vue.component('qSectionTitle', qSectionTitle)
 
 Vue.config.productionTip = false
 
