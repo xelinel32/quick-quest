@@ -26,23 +26,32 @@
           counter
           @click:append="show = !show"
         ></v-text-field>
-        <v-btn class="success" type="submit">
-          <v-icon left small>mdi-account-arrow-right</v-icon>
-          Войти
-        </v-btn>
+        <div class="d-flex justify-space-between mt-5">
+          <v-btn class="success" type="submit">
+            <v-icon left small>mdi-account-arrow-right</v-icon>
+            Войти
+          </v-btn>
+          <v-btn class="success" small fab>
+            <v-icon>mdi-google</v-icon>
+          </v-btn>
+        </div>
       </v-form>
     </v-card>
+    <q-error-handler />
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'qLogin',
   data() {
     return {
+      snackbar: false,
       show: false,
       password: '',
       email: '',
+      user: '',
       rules: {
         required: value => !!value || 'Введите пароль.',
         min: v => v.length >= 6 || 'Минимум 6 символов',
@@ -53,8 +62,22 @@ export default {
       ],
     }
   },
+  computed: {
+    ...mapGetters(['GET_ERROR']),
+  },
   methods: {
-    submitLogin() {},
+    async submitLogin() {
+      try {
+        if (this.password && this.email) {
+          const formData = {
+            email: this.email,
+            password: this.password,
+          }
+          await this.$store.dispatch('LOGIN', formData)
+          this.$router.push('/')
+        }
+      } catch (e) {}
+    },
   },
 }
 </script>

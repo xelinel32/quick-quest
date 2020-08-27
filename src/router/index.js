@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import fb from 'firebase/app'
 
 Vue.use(VueRouter)
 
@@ -51,20 +52,21 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  linkActiveClass: 'teal--text',
+  linkActiveClass: 'green--text',
   linkExactActiveClass: '',
   routes,
 })
 
 router.beforeEach((to, from, next) => {
   to.matched.forEach(item => (document.title = item.meta.title))
-  // const requireAuth = to.meta.auth
+  const requireAuth = to.meta.auth
+  const currentUser = fb.auth().currentUser
   next()
-  // if (requireAuth) {
-  //   next('/login?message=login')
-  // } else {
-  //   next()
-  // }
+  if (requireAuth && !currentUser) {
+    next('/login?message=login')
+  } else {
+    next()
+  }
 })
 
 export default router

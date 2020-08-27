@@ -23,6 +23,7 @@
             route
             to="/login"
             active-class="green accent-4 white--text"
+            v-if="!checkSighnIn"
           >
             <v-list-item-title>Sign In </v-list-item-title>
           </v-list-item>
@@ -60,6 +61,7 @@
               route
               to="login"
               active-class="teal accent-4 white--text"
+              v-if="!checkSighnIn"
             >
               <v-list-item-title
                 class="font-weight-bold text-center text-uppercase"
@@ -87,6 +89,7 @@
 </template>
 
 <script>
+import fb from 'firebase/app'
 export default {
   name: 'qHeader',
   data: () => ({
@@ -106,7 +109,13 @@ export default {
   }),
   methods: {
     openLink() {
-      this.$router.push({ name: 'questions', query: { message: 'logout' } })
+      this.$store.dispatch('LOGOUT')
+      this.$router.push({ name: 'login', query: { message: 'logout' } })
+    },
+  },
+  computed: {
+    checkSighnIn() {
+      return fb.auth().currentUser
     },
   },
 }
