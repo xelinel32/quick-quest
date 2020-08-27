@@ -8,17 +8,18 @@
     >
       <v-tab>Новые</v-tab>
       <v-tab>Старые</v-tab>
+      <v-tab>Закрыто</v-tab>
       <v-tabs-slider color="green accent-3"></v-tabs-slider>
       <v-tab-item v-for="n in 2" :key="n" class="pt-5 pb-5">
         <v-card
-          rounded
-          dark
-          class="pa-2 mb-5 light-green accent-3 black--text"
+          outlined
+          class="pa-2 mb-5 black--text rounded-0 is_bordered-card"
+          color=""
           v-for="n in 5"
           :key="n"
-          elevation="5"
+          elevation="0"
         >
-          <v-avatar color="orange darken-4" size="40" class="mt-n2 ml-n2">
+          <v-avatar color="black" size="40" tile class="mt-n2 ml-n2">
             <span class="white--text">{{ n }}</span>
           </v-avatar>
           <v-card-title>Questions name</v-card-title>
@@ -65,4 +66,8 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.is_bordered-card {
+  border: 2px solid #000 !important;
+}
+</style>

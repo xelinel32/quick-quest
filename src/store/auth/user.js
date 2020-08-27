@@ -18,6 +18,15 @@ export default {
         throw error
       }
     },
+    async GOOGLE_SIGNIN({ commit }) {
+      try {
+        let provider = new fb.auth.GoogleAuthProvider()
+        let resultAuth = await fb.auth().signInWithPopup(provider)
+        return resultAuth
+      } catch (error) {
+        commit('SET_ERROR', error)
+      }
+    },
     LOGOUT({ commit }) {
       try {
         fb.auth().signOut()

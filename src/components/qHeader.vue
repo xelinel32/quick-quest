@@ -25,12 +25,12 @@
             active-class="green accent-4 white--text"
             v-if="!checkSighnIn"
           >
-            <v-list-item-title>Sign In </v-list-item-title>
+            <v-list-item-title>Войти</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
       <template #append>
-        <v-btn block tile @click="openLink" color="secondary">Logout</v-btn>
+        <v-btn block tile @click="openLink" color="secondary">Выйти</v-btn>
       </template>
     </v-navigation-drawer>
     <v-app-bar app dark hide-on-scroll class="green accent-3">
@@ -66,13 +66,13 @@
               <v-list-item-title
                 class="font-weight-bold text-center text-uppercase"
               >
-                Sign In
+                Войти
               </v-list-item-title>
             </v-list-item>
             <v-list-item>
               <v-list-item-title>
                 <v-btn rounded @click="openLink" color="secondary">
-                  Logout
+                  Выйти
                 </v-btn>
               </v-list-item-title>
             </v-list-item>
@@ -96,12 +96,12 @@ export default {
     drawer: false,
     menuLinks: [
       {
-        name: 'Questions',
+        name: 'Вопросы',
         route: '/',
         icon: 'mdi-crosshairs-question',
       },
       {
-        name: 'Contact',
+        name: 'Контакты',
         route: '/contact',
         icon: 'mdi-contacts-outline',
       },

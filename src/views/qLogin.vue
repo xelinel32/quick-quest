@@ -31,8 +31,8 @@
             <v-icon left small>mdi-account-arrow-right</v-icon>
             Войти
           </v-btn>
-          <v-btn class="success" small fab>
-            <v-icon>mdi-google</v-icon>
+          <v-btn class="red" small fab @click="googleSignIn">
+            <v-icon color="white">mdi-google</v-icon>
           </v-btn>
         </div>
       </v-form>
@@ -51,7 +51,6 @@ export default {
       show: false,
       password: '',
       email: '',
-      user: '',
       rules: {
         required: value => !!value || 'Введите пароль.',
         min: v => v.length >= 6 || 'Минимум 6 символов',
@@ -73,9 +72,19 @@ export default {
             email: this.email,
             password: this.password,
           }
-          await this.$store.dispatch('LOGIN', formData)
-          this.$router.push('/')
+          await this.$store.dispatch('LOGIN', formData).then(() => {
+            this.$router.push('/')
+          })
         }
+      } catch (e) {}
+    },
+    async googleSignIn() {
+      try {
+        await this.$store.dispatch('GOOGLE_SIGNIN').then(data => {
+          if (data) {
+            this.$router.push('/')
+          }
+        })
       } catch (e) {}
     },
   },
