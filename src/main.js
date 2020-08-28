@@ -42,6 +42,11 @@ fb.auth().onAuthStateChanged(() => {
       store,
       vuetify,
       render: h => h(App),
+      created() {
+        if (fb.auth().currentUser) {
+          this.$store.commit('SET_USER', fb.auth().currentUser.uid)
+        }
+      },
     }).$mount('#app')
   }
 })

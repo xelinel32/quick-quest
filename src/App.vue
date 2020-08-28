@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <component :is="layoutChange"></component>
+    <keep-alive>
+      <component :is="layoutChange"></component>
+    </keep-alive>
   </v-app>
 </template>
 
