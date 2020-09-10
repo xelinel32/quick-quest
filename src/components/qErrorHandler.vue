@@ -1,20 +1,18 @@
 <template>
-  <div class="q-error-handler">
-    <v-snackbar v-model="snackbar" top right color="info" timeout="5000">
-      {{ showError }}
-      <template #action="{ attrs }">
-        <v-btn
-          color="primary"
-          icon
-          small
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
-          <v-icon color="white">mdi-close</v-icon>
-        </v-btn>
-      </template>
-    </v-snackbar>
-  </div>
+  <v-snackbar v-model="snackbar" top right color="info" timeout="5000">
+    {{ showError }}
+    <template #action="{ attrs }">
+      <v-btn
+        color="primary"
+        icon
+        small
+        v-bind="attrs"
+        @click="snackbar = false"
+      >
+        <v-icon color="white">mdi-close</v-icon>
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>

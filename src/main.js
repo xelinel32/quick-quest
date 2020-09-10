@@ -44,7 +44,15 @@ fb.auth().onAuthStateChanged(() => {
       render: h => h(App),
       created() {
         if (fb.auth().currentUser) {
-          this.$store.commit('SET_USER', fb.auth().currentUser.uid)
+          fb.auth().currentUser.providerData.forEach(u => {
+            const user = {
+              name: u.displayName,
+              email: u.email,
+              avatar: u.photoURL,
+              uid: u.uid,
+            }
+            this.$store.commit('SET_USER', user)
+          })
         }
       },
     }).$mount('#app')

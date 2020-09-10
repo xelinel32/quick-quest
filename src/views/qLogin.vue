@@ -1,44 +1,58 @@
 <template>
-  <div class="q-login">
-    <v-card class="pa-2 elevation-5 ma-auto mt-15" width="600">
-      <v-card-title class="text-center d-block mb-4">
-        Авторизируйтесь
-      </v-card-title>
-      <v-form class="pl-7 pr-7 pb-7" @submit.prevent="submitLogin">
-        <v-text-field
-          append-icon="mdi-email"
-          outlined
-          label="E-mail"
-          :rules="emailRules"
-          placeholder="Введите ваш E-mail"
-          required
-          v-model="email"
+  <v-row align="center">
+    <v-col cols="12">
+      <v-card class="pa-2 elevation-5 ma-auto mt-15" width="600">
+        <v-card-title class="text-center d-block mb-4">
+          Авторизируйтесь
+        </v-card-title>
+        <v-form
+          class="pl-lg-7 pr-lg-7 pr-4 pl-4 pb-7"
+          @submit.prevent="submitLogin"
         >
-        </v-text-field>
-        <v-text-field
-          v-model="password"
-          outlined
-          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-          :rules="[rules.required, rules.min]"
-          :type="show ? 'text' : 'password'"
-          label="Введите пароль"
-          placeholder="Введите текущий пароль"
-          counter
-          @click:append="show = !show"
-        ></v-text-field>
-        <div class="d-flex justify-space-between mt-5">
-          <v-btn class="success" type="submit">
-            <v-icon left small>mdi-account-arrow-right</v-icon>
-            Войти
-          </v-btn>
-          <v-btn class="red" small fab @click="googleSignIn">
-            <v-icon color="white">mdi-google</v-icon>
-          </v-btn>
-        </div>
-      </v-form>
-    </v-card>
-    <q-error-handler />
-  </div>
+          <v-row>
+            <v-col cols="12">
+              <v-text-field
+                append-icon="mdi-email"
+                outlined
+                label="E-mail"
+                :rules="emailRules"
+                placeholder="Введите ваш E-mail"
+                required
+                v-model="email"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                v-model="password"
+                outlined
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[passRules.required, passRules.min]"
+                :type="show ? 'text' : 'password'"
+                label="Введите пароль"
+                placeholder="Введите текущий пароль"
+                counter
+                @click:append="show = !show"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" class="d-flex">
+              <v-btn class="success" type="submit">
+                <v-icon left small>mdi-account-arrow-right</v-icon>
+                Войти
+              </v-btn>
+              <v-spacer></v-spacer>
+              <v-btn class="red" small fab @click="googleSignIn">
+                <v-icon color="white">mdi-google</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
+      </v-card>
+      <q-error-handler />
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -51,7 +65,7 @@ export default {
       show: false,
       password: '',
       email: '',
-      rules: {
+      passRules: {
         required: value => !!value || 'Введите пароль.',
         min: v => v.length >= 6 || 'Минимум 6 символов',
       },
@@ -76,16 +90,20 @@ export default {
             this.$router.push('/')
           })
         }
-      } catch (e) {}
+      } catch (e) {
+        console.log(e)
+        throw e
+      }
     },
     async googleSignIn() {
       try {
-        await this.$store.dispatch('GOOGLE_SIGNIN').then(data => {
-          if (data) {
-            this.$router.push('/')
-          }
+        await this.$store.dispatch('GOOGLE_SIGNIN').then(() => {
+          this.$router.push('/')
         })
-      } catch (e) {}
+      } catch (e) {
+        console.log(e)
+        throw e
+      }
     },
   },
 }

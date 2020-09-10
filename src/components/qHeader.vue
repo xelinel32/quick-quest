@@ -23,9 +23,14 @@
             route
             to="/login"
             active-class="green accent-4 white--text"
-            v-if="!checkSighnIn"
+            v-if="!GET_USER"
           >
             <v-list-item-title>Войти</v-list-item-title>
+          </v-list-item>
+          <v-list-item v-else>
+            <v-list-item-title>{{
+              GET_USER.name || GET_USER.email
+            }}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -61,7 +66,7 @@
               route
               to="login"
               active-class="teal accent-4 white--text"
-              v-if="!checkSighnIn"
+              v-if="!GET_USER"
             >
               <v-list-item-title
                 class="font-weight-bold text-center text-uppercase"
@@ -69,9 +74,14 @@
                 Войти
               </v-list-item-title>
             </v-list-item>
+            <v-list-item v-else>
+              <v-list-item-title>{{
+                GET_USER.name || GET_USER.email
+              }}</v-list-item-title>
+            </v-list-item>
             <v-list-item>
               <v-list-item-title>
-                <v-btn rounded @click="openLink" color="secondary">
+                <v-btn rounded @click="openLink" block color="secondary">
                   Выйти
                 </v-btn>
               </v-list-item-title>
@@ -89,7 +99,7 @@
 </template>
 
 <script>
-import fb from 'firebase/app'
+import { mapGetters } from 'vuex'
 export default {
   name: 'qHeader',
   data: () => ({
@@ -107,15 +117,14 @@ export default {
       },
     ],
   }),
+  computed: {
+    ...mapGetters(['GET_USER']),
+  },
   methods: {
     openLink() {
-      this.$store.dispatch('LOGOUT')
-      this.$router.push({ name: 'login', query: { message: 'logout' } })
-    },
-  },
-  computed: {
-    checkSighnIn() {
-      return fb.auth().currentUser
+      this.$store.dispatch('LOGOUT').then(() => {
+        this.$router.push({ name: 'login', query: { message: 'logout' } })
+      })
     },
   },
 }

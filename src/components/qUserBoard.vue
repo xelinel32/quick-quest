@@ -1,6 +1,12 @@
 <template>
-  <v-col cols="12" sm="6">
-    <v-simple-table dense>
+  <v-col cols="6" sm="6">
+    <v-progress-circular
+      v-if="loading"
+      indeterminate
+      color="green"
+      size="24"
+    ></v-progress-circular>
+    <v-simple-table dense v-else>
       <template v-slot:default>
         <thead>
           <tr>
@@ -9,9 +15,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in desserts" :key="item.name">
-            <td>{{ item.name }}</td>
-            <td>{{ item.calories }}</td>
+          <tr v-for="(item, idx) in desserts" :key="idx">
+            <td>{{ item.name || item.email }}</td>
+            <td>{{ item.counterQuestions }}</td>
           </tr>
         </tbody>
       </template>
@@ -22,50 +28,17 @@
 <script>
 export default {
   name: 'qUserBoard',
-  data: () => ({
-    desserts: [
-      {
-        name: 'Frozen Yogurt',
-        calories: 159,
-      },
-      {
-        name: 'Ice cream sandwich',
-        calories: 237,
-      },
-      {
-        name: 'Eclair',
-        calories: 262,
-      },
-      {
-        name: 'Cupcake',
-        calories: 305,
-      },
-      {
-        name: 'Gingerbread',
-        calories: 356,
-      },
-      {
-        name: 'Jelly bean',
-        calories: 375,
-      },
-      {
-        name: 'Lollipop',
-        calories: 392,
-      },
-      {
-        name: 'Honeycomb',
-        calories: 408,
-      },
-      {
-        name: 'Donut',
-        calories: 452,
-      },
-      {
-        name: 'KitKat',
-        calories: 518,
-      },
-    ],
-  }),
+  props: {
+    desserts: {
+      type: Array,
+      required: true,
+      default: () => [],
+    },
+    loading: {
+      type: Boolean,
+      required: true,
+    },
+  },
 }
 </script>
 

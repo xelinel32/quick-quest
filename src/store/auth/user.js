@@ -3,7 +3,7 @@ import fb from 'firebase/app'
 export default {
   state: {
     error: null,
-    user: null,
+    user: {},
   },
   mutations: {
     SET_ERROR(state, error) {
@@ -19,12 +19,21 @@ export default {
   actions: {
     async LOGIN({ commit }, { email, password }) {
       try {
-        let resultAuth = await fb
+        const resultAuth = await fb
           .auth()
           .signInWithEmailAndPassword(email, password)
-        if (resultAuth.user.uid) {
-          commit('SET_USER', resultAuth.user.uid)
+        const user = {
+          name: resultAuth.user.displayName || '',
+          email: resultAuth.user.email,
+          avatar: resultAuth.user.photoURL || '',
+          uid: resultAuth.user.uid,
+          counterQuestions: 0,
         }
+        await fb
+          .database()
+          .ref(`/users/${user.uid}/info`)
+          .set(user)
+        commit('SET_USER', user)
       } catch (error) {
         commit('SET_ERROR', error)
         throw error
@@ -34,11 +43,18 @@ export default {
       try {
         let provider = new fb.auth.GoogleAuthProvider()
         let resultAuth = await fb.auth().signInWithPopup(provider)
-        debugger
-        if (resultAuth.user.uid) {
-          commit('SET_USER', resultAuth.user.uid)
+        const user = {
+          name: resultAuth.additionalUserInfo.profile.name,
+          email: resultAuth.additionalUserInfo.profile.email,
+          avatar: resultAuth.additionalUserInfo.profile.picture,
+          uid: resultAuth.user.uid,
+          counterQuestions: 0,
         }
-        return resultAuth
+        await fb
+          .database()
+          .ref(`/users/${resultAuth.user.uid}/info`)
+          .set(user)
+        commit('SET_USER', user)
       } catch (error) {
         commit('SET_ERROR', error)
       }
@@ -58,8 +74,7 @@ export default {
     },
   },
   getters: {
-    GET_ERROR(state) {
-      return state.error
-    },
+    GET_ERROR: state => state.error,
+    GET_USER: state => state.user,
   },
 }

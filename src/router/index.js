@@ -46,6 +46,14 @@ const routes = [
       title: 'Login Page',
       layout: 'empty',
     },
+    beforeEnter: (to, from, next) => {
+      const currentUser = fb.auth().currentUser
+      if (currentUser) {
+        next('/')
+      } else {
+        next()
+      }
+    },
   },
 ]
 

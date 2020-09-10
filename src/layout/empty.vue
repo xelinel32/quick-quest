@@ -1,11 +1,9 @@
 <template>
-  <div class="empty">
-    <v-main>
-      <v-container>
-        <router-view />
-      </v-container>
-    </v-main>
-  </div>
+  <v-main>
+    <v-container fluid fill-height>
+      <router-view />
+    </v-container>
+  </v-main>
 </template>
 
 <script>

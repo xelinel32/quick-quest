@@ -1,5 +1,5 @@
 <template>
-  <div class="v-contact">
+  <v-row>
     <q-section-title>
       <template #center>
         Контакты
@@ -26,7 +26,7 @@
       error! Architecto, minus sequi. Quas inventore animi minus sint distinctio
       recusandae?
     </p>
-  </div>
+  </v-row>
 </template>
 
 <script>
