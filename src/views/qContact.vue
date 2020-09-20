@@ -32,6 +32,16 @@
 <script>
 export default {
   name: 'vContact',
+  data: () => ({
+    products: ['a', 'b'],
+  }),
+  beforeRouteUpdate(to, from, next) {
+    if (this.products.length) {
+      next()
+    } else {
+      next(false)
+    }
+  },
 }
 </script>
 

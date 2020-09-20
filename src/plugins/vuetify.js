@@ -5,6 +5,8 @@ import '@mdi/font/css/materialdesignicons.min.css'
 
 Vue.use(Vuetify)
 
+Vuetify.config.silent = true
+
 export default new Vuetify({
   theme: {
     dark: false,
