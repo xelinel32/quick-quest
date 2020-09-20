@@ -1,6 +1,6 @@
 # quick-quest
 
-![Login](owerview/Login_Page.png)
+![Login](owerview/Login Page.png)
 ![Questions](owerview/Questions.png)
 
 ## Project setup
