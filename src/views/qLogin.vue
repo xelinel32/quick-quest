@@ -15,10 +15,12 @@
                 append-icon="mdi-email"
                 outlined
                 label="E-mail"
-                :rules="emailRules"
+                :error-messages="emailErrors"
                 placeholder="Введите ваш E-mail"
                 required
                 v-model="email"
+                @input="$v.email.$touch()"
+                @blur="$v.email.$touch()"
               >
               </v-text-field>
             </v-col>
@@ -27,8 +29,10 @@
                 v-model="password"
                 outlined
                 :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[passRules.required, passRules.min]"
                 :type="show ? 'text' : 'password'"
+                :error-messages="passErrors"
+                @input="$v.password.$touch()"
+                @blur="$v.password.$touch()"
                 label="Введите пароль"
                 placeholder="Введите текущий пароль"
                 counter
@@ -57,6 +61,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { required, minLength, email } from 'vuelidate/lib/validators'
 export default {
   name: 'qLogin',
   data() {
@@ -65,18 +70,31 @@ export default {
       show: false,
       password: '',
       email: '',
-      passRules: {
-        required: value => !!value || 'Введите пароль.',
-        min: v => v.length >= 6 || 'Минимум 6 символов',
-      },
-      emailRules: [
-        v => !!v || 'Введите E-mail',
-        v => /.+@.+\..+/.test(v) || 'Введите коректный E-mail',
-      ],
     }
+  },
+  validations: {
+    password: { required, minLength: minLength(4) },
+    email: { required, email },
   },
   computed: {
     ...mapGetters(['GET_ERROR']),
+    emailErrors() {
+      const errors = []
+      if (!this.$v.email.$dirty) return errors
+      !this.$v.email.email && errors.push('Введите валидный email')
+      !this.$v.email.required && errors.push('Введите почту')
+      return errors
+    },
+    passErrors() {
+      const errors = []
+      if (!this.$v.password.$dirty) return errors
+      !this.$v.password.minLength &&
+        errors.push(
+          `Пароль не меньше чем ${this.$v.password.$params.minLength.min} символов`
+        )
+      !this.$v.password.required && errors.push('Введите пароль')
+      return errors
+    },
   },
   methods: {
     async submitLogin() {
@@ -89,6 +107,8 @@ export default {
           await this.$store.dispatch('LOGIN', formData).then(() => {
             this.$router.push('/')
           })
+        } else {
+          this.$v.$touch()
         }
       } catch (e) {
         console.log(e)

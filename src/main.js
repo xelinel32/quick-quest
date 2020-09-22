@@ -8,7 +8,9 @@ import fb from './api/firebaseConfig'
 import VuePageTransition from 'vue-page-transition'
 import qSectionTitle from './components/qSectionTitle'
 import qErrorHandler from './components/qErrorHandler'
+import Vuelidate from 'vuelidate'
 
+Vue.use(Vuelidate)
 Vue.use(VuePageTransition)
 Vue.component('qSectionTitle', qSectionTitle)
 Vue.component('qErrorHandler', qErrorHandler)
