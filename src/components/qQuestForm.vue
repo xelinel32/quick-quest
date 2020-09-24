@@ -4,16 +4,17 @@
       <v-text-field
         v-model.trim="name"
         outlined
-        :rules="nameRules"
         placeholder="Введите ваше имя"
+        :error-messages="fieldErrors"
         label="Имя"
         required
+        @input="$v.name.$touch()"
+        @blur="$v.name.$touch()"
       >
       </v-text-field>
       <v-text-field
         v-model.trim="questHead"
         outlined
-        :rules="questHeadRules"
         placeholder="Введите тему вопроса"
         label="Тема вопроса"
         required
@@ -23,7 +24,6 @@
         v-model="select"
         outlined
         :items="items"
-        :rules="[v => !!v || 'Категория не выбрана']"
         label="Категория"
         placeholder="Выберите категорию вопроса"
         required
@@ -35,7 +35,6 @@
         label="Введите вопрос"
         height="100"
         required
-        :rules="questRules"
         v-model="quest"
         placeholder="Напишите ваш вопрос ❤"
         no-resize
@@ -57,6 +56,7 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
 export default {
   name: 'qQuestForm',
   props: {
@@ -70,21 +70,27 @@ export default {
   },
   data: () => ({
     snackbar: false,
-    alertMessage: '',
+    alertMessage: null,
     name: '',
-    nameRules: [v => !!v || 'Введите имя'],
     questHead: '',
-    questHeadRules: [v => !!v || 'Введите тему вопроса'],
     quest: '',
-    questRules: [v => !!v || 'Введите вопрос'],
     select: null,
     items: ['Жизнь', 'Автомобили', 'Программирование', 'Общее'],
   }),
+  validations: {
+    name: { required },
+    questHead: { required },
+    quest: { required },
+    select: { required },
+  },
   computed: {
     disableBtn() {
       return this.name && this.quest && this.select && this.questHead
         ? true
         : false
+    },
+    fieldErrors() {
+      return !this.$v.name.required ? 'Введите поле' : ''
     },
   },
   methods: {
@@ -116,7 +122,11 @@ export default {
     },
   },
   mounted() {
-    this.name = this.user.name
+    if (this.user.name) {
+      this.name = this.user.name
+    } else {
+      this.name = this.user.email
+    }
   },
 }
 </script>
